@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:app_erp/screen/manage_job/component/managemember.dart';
 import 'package:app_erp/screen/manage_job/createteam.dart';
 import 'package:flutter/material.dart';
 
@@ -13,17 +16,40 @@ class _DropDownState extends State<DropDown> {
   bool isContainerExpanded2 = false;
   bool isContainerExpanded3 = false;
 
+  //check delete
+  final _controller = TextEditingController();
+  final _textStreamController = StreamController<String>.broadcast();
+  bool _isButtonDisabled = true;
+  Color _buttonColor = Colors.grey;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(checkAndUpdateButtonState);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _textStreamController.close();
+    super.dispose();
+  }
+
+  void checkAndUpdateButtonState() {
+    _textStreamController.add(_controller.text);
+  }
+
+  void _submitDialog() {
+    Navigator.of(context).pop(_controller.text);
+    _controller.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           GestureDetector(
-            // onTap: () {
-            //   setState(() {
-            //     isContainerExpanded1 = !isContainerExpanded1;
-            //   });
-            // },
             onLongPress: () {
               Future.delayed(Duration(milliseconds: 500), () {
                 showModalBottomSheet(
@@ -128,99 +154,485 @@ class _DropDownState extends State<DropDown> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                height: 42,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 212, 235, 248),
-                                          shape: BoxShape.circle,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ManageMember()),
+                                  );
+                                },
+                                child: Container(
+                                  height: 42,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 212, 235, 248),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Icon(
+                                            Icons.person_outline,
+                                            color: Colors.blue,
+                                            size: 15.0,
+                                          ),
                                         ),
-                                        child: Icon(
-                                          Icons.person_outline,
-                                          color: Colors.blue,
-                                          size: 15.0,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 20.0),
-                                        child: Text('Quản lý thành viên',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      )
-                                    ],
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 20.0),
+                                          child: Text('Quản lý thành viên',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              Container(
-                                height: 42,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 212, 235, 248),
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Icon(
-                                          Icons.cloud_outlined,
-                                          color: Colors.blue,
-                                          size: 15.0,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 20.0),
-                                        child: Text('Lưu trữ team',
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                          title: Text(
+                                            'Lưu trữ team',
                                             style: TextStyle(
                                               fontSize: 12,
-                                            )),
-                                      )
-                                    ],
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          content: SingleChildScrollView(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  'Bạn đang lưu trữ team: Khối RD. Nhập 7 để xác nhận hành động!',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                SizedBox(height: 16),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(
+                                                        height: 30,
+                                                        child: TextField(
+                                                          controller:
+                                                              _controller,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          onChanged: (value) {
+                                                            _textStreamController
+                                                                .add(value);
+                                                          },
+                                                          decoration:
+                                                              InputDecoration(
+                                                            filled: true,
+                                                            fillColor:
+                                                                Color.fromRGBO(
+                                                                    211,
+                                                                    211,
+                                                                    211,
+                                                                    0.5),
+                                                            hintText:
+                                                                "Nhập xác nhận...",
+                                                            prefixIcon: Icon(
+                                                                Icons.search,
+                                                                color: Colors
+                                                                    .white),
+                                                            border: InputBorder
+                                                                .none,
+                                                            contentPadding:
+                                                                EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            10),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              borderSide:
+                                                                  BorderSide
+                                                                      .none,
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              borderSide: BorderSide(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                            hintStyle:
+                                                                TextStyle(
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 10),
+                                                          maxLines: 1,
+                                                          cursorColor:
+                                                              Colors.white,
+                                                          textAlignVertical:
+                                                              TextAlignVertical
+                                                                  .center,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Center(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        Container(
+                                                          height: 35,
+                                                          width: 35,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.white,
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            border: Border.all(
+                                                              color:
+                                                                  Colors.blue,
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                          child: IconButton(
+                                                            onPressed: () {},
+                                                            icon: Icon(Icons
+                                                                .cloud_download_outlined),
+                                                            color: Colors.blue,
+                                                            iconSize: 15,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 40,
+                                                          width: 180,
+                                                          child: StreamBuilder<
+                                                              String>(
+                                                            stream:
+                                                                _textStreamController
+                                                                    .stream,
+                                                            builder: (context,
+                                                                snapshot) {
+                                                              final value =
+                                                                  snapshot.data ??
+                                                                      '';
+                                                              final isButtonDisabled =
+                                                                  value ==
+                                                                          'save'
+                                                                      ? false
+                                                                      : true;
+                                                              final buttonColor =
+                                                                  isButtonDisabled
+                                                                      ? Colors
+                                                                          .grey
+                                                                      : Colors
+                                                                          .green;
+                                                              return ElevatedButton(
+                                                                onPressed:
+                                                                    isButtonDisabled
+                                                                        ? null
+                                                                        : () =>
+                                                                            _submitDialog(),
+                                                                child: Text(
+                                                                    'Submit'),
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  primary:
+                                                                      buttonColor,
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: []);
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  height: 42,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 212, 235, 248),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Icon(
+                                            Icons.cloud_outlined,
+                                            color: Colors.blue,
+                                            size: 15.0,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 20.0),
+                                          child: Text('Lưu trữ team',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              Container(
-                                height: 42,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 245, 215, 215),
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Icon(
-                                          Icons.delete_outlined,
-                                          color: Colors.red,
-                                          size: 15.0,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 20.0),
-                                        child: Text('Xóa team',
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                          title: Text(
+                                            'Xóa team',
                                             style: TextStyle(
                                               fontSize: 12,
-                                            )),
-                                      )
-                                    ],
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          content: SingleChildScrollView(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  'Bạn đang xóa team: Khối RD. Nhập 7 để xác nhận hành động!',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                SizedBox(height: 16),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(
+                                                        height: 30,
+                                                        child: TextField(
+                                                          controller:
+                                                              _controller,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          onChanged: (value) {
+                                                            _textStreamController
+                                                                .add(value);
+                                                          },
+                                                          decoration:
+                                                              InputDecoration(
+                                                            filled: true,
+                                                            fillColor:
+                                                                Color.fromRGBO(
+                                                                    211,
+                                                                    211,
+                                                                    211,
+                                                                    0.5),
+                                                            hintText:
+                                                                "Nhập xác nhận...",
+                                                            prefixIcon: Icon(
+                                                                Icons.search,
+                                                                color: Colors
+                                                                    .white),
+                                                            border: InputBorder
+                                                                .none,
+                                                            contentPadding:
+                                                                EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            10),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              borderSide:
+                                                                  BorderSide
+                                                                      .none,
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              borderSide: BorderSide(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                            hintStyle:
+                                                                TextStyle(
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 10),
+                                                          maxLines: 1,
+                                                          cursorColor:
+                                                              Colors.white,
+                                                          textAlignVertical:
+                                                              TextAlignVertical
+                                                                  .center,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Center(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        Container(
+                                                          height: 35,
+                                                          width: 35,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.white,
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            border: Border.all(
+                                                              color: Colors.red,
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                          child: IconButton(
+                                                            onPressed: () {},
+                                                            icon: Icon(Icons
+                                                                .delete_outline),
+                                                            color: Colors.red,
+                                                            iconSize: 15,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 40,
+                                                          width: 180,
+                                                          child: StreamBuilder<
+                                                              String>(
+                                                            stream:
+                                                                _textStreamController
+                                                                    .stream,
+                                                            builder: (context,
+                                                                snapshot) {
+                                                              final value =
+                                                                  snapshot.data ??
+                                                                      '';
+                                                              final isButtonDisabled =
+                                                                  value ==
+                                                                          'delete'
+                                                                      ? false
+                                                                      : true;
+                                                              final buttonColor =
+                                                                  isButtonDisabled
+                                                                      ? Colors
+                                                                          .grey
+                                                                      : Colors
+                                                                          .green;
+                                                              return ElevatedButton(
+                                                                onPressed:
+                                                                    isButtonDisabled
+                                                                        ? null
+                                                                        : () =>
+                                                                            _submitDialog(),
+                                                                child: Text(
+                                                                    'Submit'),
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  primary:
+                                                                      buttonColor,
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: []);
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  height: 42,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 245, 215, 215),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Icon(
+                                            Icons.delete_outlined,
+                                            color: Colors.red,
+                                            size: 15.0,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 20.0),
+                                          child: Text('Xóa team',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -233,7 +645,6 @@ class _DropDownState extends State<DropDown> {
                 );
               });
             },
-
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8.0, left: 8, right: 8),
               child: Container(

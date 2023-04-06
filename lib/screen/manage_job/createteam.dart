@@ -1,3 +1,4 @@
+import 'package:app_erp/screen/manage_job/manage_job_screen.dart';
 import 'package:flutter/material.dart';
 
 class CreateTeam extends StatefulWidget {
@@ -57,7 +58,12 @@ class _CreateTeamState extends State<CreateTeam> {
             Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ManageJobPage()),
+                    );
+                  },
                   icon: Icon(Icons.arrow_back),
                   color: Colors.blue,
                 ),
@@ -94,13 +100,13 @@ class _CreateTeamState extends State<CreateTeam> {
                     hintText: "Tên team...",
                     prefixIcon: Icon(Icons.search, color: Colors.grey),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 10),
+                    contentPadding: EdgeInsets.symmetric(vertical: 8),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(color: Colors.grey),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(color: Colors.grey),
                     ),
                     hintStyle: TextStyle(
@@ -183,20 +189,21 @@ class _CreateTeamState extends State<CreateTeam> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Center(
-                                  child: Container(
-                                width: 42,
-                                height: 42,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromARGB(255, 137, 195, 236),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "+${avatars.length - 6}",
-                                    style: TextStyle(fontSize: 18),
+                                child: Container(
+                                  width: 42,
+                                  height: 42,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color.fromARGB(255, 137, 195, 236),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "+${avatars.length - 6}",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
                                   ),
                                 ),
-                              )),
+                              ),
                             ),
                           );
                         } else {
@@ -219,22 +226,26 @@ class _CreateTeamState extends State<CreateTeam> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Are you sure?'),
-                        content: Text('Do you want to proceed?'),
+                        title: Text(
+                          'Bạn có chắc không?',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        content: Text('Bạn có muốn tiếp tục?',
+                            style: TextStyle(fontSize: 12)),
                         actions: [
                           TextButton(
                             onPressed: () {
                               // Code to execute when No is pressed.
                               Navigator.of(context).pop();
                             },
-                            child: Text('No'),
+                            child: Text('Có'),
                           ),
                           TextButton(
                             onPressed: () {
                               // Code to execute when Yes is pressed.
                               Navigator.of(context).pop();
                             },
-                            child: Text('Yes'),
+                            child: Text('Không'),
                           ),
                         ],
                       );

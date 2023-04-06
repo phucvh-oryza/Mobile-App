@@ -7,27 +7,29 @@ class AuthService {
 
   Future<String> login(String email, String password) async {
     final response = await _dio.post(
-      'https://ad25-2402-800-63ae-d287-6985-fe5d-c5b8-593f.ap.ngrok.io/user/auth/login',
-      data: {'Email': email, 'Password': password},
+      'http://192.168.103.57:3100/api/login',
+      data: {'Email': email, 'password': password},
     );
-    final token = response.data['access_token'];
-    print('a' + token);
+    final token = response.data['token'];
+    print('Token: ' + token);
     await saveToken(token);
     return token;
   }
 
   Future<void> saveToken(String token) async {
-    await storage.write(key: 'access_token', value: token);
+    await storage.write(key: 'token', value: token);
   }
 
   Future<String?> getToken() async {
-    final token = await storage.read(key: 'access_token');
+    final token = await storage.read(key: 'token');
+    print(
+        '_________________________________________________________________________________');
     print(token);
     return token;
   }
 
   Future<void> logout() async {
-    await storage.delete(key: 'access_token');
+    await storage.delete(key: 'token');
   }
 
   Future<bool> isLoggedIn() async {

@@ -86,7 +86,7 @@ class _TopMenu_ManageJobState extends State<TopMenu_ManageJob> {
               fit: BoxFit.fill,
             ),
           ),
-          height: 100,
+          height: 90,
           child: Column(
             children: [
               Container(
@@ -94,7 +94,12 @@ class _TopMenu_ManageJobState extends State<TopMenu_ManageJob> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
+                      },
                       icon: Icon(Icons.arrow_back),
                       color: Colors.white,
                     ),

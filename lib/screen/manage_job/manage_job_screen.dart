@@ -33,7 +33,7 @@ class _ManageJobPageState extends State<ManageJobPage> {
             Expanded(
               flex: 4,
               child: Container(
-                child: Container(child: DropDown()),
+                child: SingleChildScrollView(child: DropDown()),
               ),
             ),
           ],
