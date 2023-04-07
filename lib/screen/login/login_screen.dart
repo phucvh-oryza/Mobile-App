@@ -67,201 +67,226 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Form(
           key: _formKey,
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 120.0,
-              ),
-              Image(
-                image: AssetImage('assets/images/logo.png'),
-                height: 50.0,
-              ),
-              SizedBox(
-                height: 80.0,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: TextFormField(
-                  // controller: _emailController,
-                  onChanged: (value) {
-                    _email = value;
-                  },
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(30.0), // set border radius here
-                      borderSide: BorderSide.none, // remove border here
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[300],
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: Colors.grey[700],
-                    ),
-                    labelStyle: TextStyle(
-                      color:
-                          Colors.grey[700], // set the color of the label text
-                    ),
-                  ),
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.black,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    } else if (!value.contains('@')) {
-                      return 'Please enter a valid email address';
-                    }
-
-                    return null;
-                  },
+              Expanded(
+                child: SizedBox(
+                  height: 120.0,
                 ),
               ),
-              SizedBox(
-                height: 20.0,
+              Expanded(
+                child: Image(
+                  image: AssetImage('assets/images/logo.png'),
+                  height: 50.0,
+                ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: TextFormField(
-                  // controller: _passwordController,
-                  onChanged: (value) {
-                    _password = value;
-                  },
-                  cursorColor: Colors.black,
-                  obscureText: _obscureText,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide.none, // remove border here
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[300],
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: Colors.grey[700],
-                    ),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _obscureText = !_obscureText;
-                        });
-                      },
-                      icon: Icon(
-                        _obscureText ? Icons.visibility_off : Icons.visibility,
+              Expanded(
+                child: SizedBox(
+                  height: 80.0,
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  child: TextFormField(
+                    // controller: _emailController,
+                    onChanged: (value) {
+                      _email = value;
+                    },
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                            30.0), // set border radius here
+                        borderSide: BorderSide.none, // remove border here
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[300],
+                      prefixIcon: Icon(
+                        Icons.person,
                         color: Colors.grey[700],
                       ),
+                      labelStyle: TextStyle(
+                        color:
+                            Colors.grey[700], // set the color of the label text
+                      ),
                     ),
-                    labelStyle: TextStyle(
-                      color:
-                          Colors.grey[700], // set the color of the label text
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black,
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      } else if (!value.contains('@')) {
+                        return 'Please enter a valid email address';
+                      }
+
+                      return null;
+                    },
                   ),
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.black,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
                 ),
               ),
-              SizedBox(
-                height: 25.0,
+              Expanded(
+                child: SizedBox(
+                  height: 20.0,
+                ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Text.rich(
-                  TextSpan(
-                    text: 'Bằng việc nhấn đăng nhập, bạn đồng ý với các\n',
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 12.0,
-                      color: Colors.grey[700],
-                    ),
-                    children: [
-                      TextSpan(
-                        text: 'Điều khoản dịch vụ ',
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.0,
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  child: TextFormField(
+                    // controller: _passwordController,
+                    onChanged: (value) {
+                      _password = value;
+                    },
+                    cursorColor: Colors.black,
+                    obscureText: _obscureText,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide.none, // remove border here
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[300],
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Colors.grey[700],
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           color: Colors.grey[700],
                         ),
                       ),
-                      TextSpan(
-                        text: 'và ',
+                      labelStyle: TextStyle(
+                        color:
+                            Colors.grey[700], // set the color of the label text
                       ),
-                      TextSpan(
-                        text: 'Chính sách bảo mật',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextSpan(
-                        text: ' của chúng tôi!',
-                      ),
-                    ],
+                    ),
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(
-                height: 40.0,
+              Expanded(
+                child: SizedBox(
+                  height: 25.0,
+                ),
               ),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Quên mật khẩu?',
-                    ),
-                    SizedBox(
-                      width: 40.0,
-                    ),
-                    Container(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            try {
-                              await _authService.login(_email, _password);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomePage(),
-                                  ));
-                            } catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Đăng nhập thất bại: $e'),
-                                ),
-                              );
-                            }
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.grey[700],
-                          minimumSize: Size(120, 40),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Text.rich(
+                    TextSpan(
+                      text: 'Bằng việc nhấn đăng nhập, bạn đồng ý với các\n',
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 12.0,
+                        color: Colors.grey[700],
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'Điều khoản dịch vụ ',
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.0,
+                            color: Colors.grey[700],
                           ),
                         ),
-                        child: const Text(
-                          'Đăng nhập',
-                          style: TextStyle(color: Colors.white),
+                        TextSpan(
+                          text: 'và ',
                         ),
-                      ),
+                        TextSpan(
+                          text: 'Chính sách bảo mật',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text: ' của chúng tôi!',
+                        ),
+                      ],
                     ),
-                  ],
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: SizedBox(
+                  height: 40.0,
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Quên mật khẩu?',
+                        ),
+                        SizedBox(
+                          width: 40.0,
+                        ),
+                        Container(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                try {
+                                  await _authService.login(_email, _password);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HomePage(),
+                                      ));
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Đăng nhập thất bại: $e'),
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.grey[700],
+                              minimumSize: Size(120, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            child: const Text(
+                              'Đăng nhập',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],

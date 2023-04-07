@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app_erp/screen/manage_job/component/managemember.dart';
 import 'package:app_erp/screen/manage_job/createteam.dart';
+import 'package:app_erp/screen/project/manageproject.dart';
 import 'package:flutter/material.dart';
 
 class DropDown extends StatefulWidget {
@@ -122,35 +123,173 @@ class _DropDownState extends State<DropDown> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                height: 42,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 212, 235, 248),
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Icon(
-                                          Icons.add_outlined,
-                                          color: Colors.blue,
-                                          size: 15.0,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 20.0),
-                                        child: Text('Hiệu chỉnh team',
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                          title: Text(
+                                            'Hiệu chỉnh team',
                                             style: TextStyle(
                                               fontSize: 12,
-                                            )),
-                                      )
-                                    ],
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          content: SingleChildScrollView(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                SizedBox(height: 16),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(
+                                                        height: 30,
+                                                        child: TextField(
+                                                          controller:
+                                                              _controller,
+                                                          onChanged: (value) {
+                                                            _textStreamController
+                                                                .add(value);
+                                                          },
+                                                          decoration:
+                                                              InputDecoration(
+                                                            filled: true,
+                                                            fillColor:
+                                                                Color.fromRGBO(
+                                                                    211,
+                                                                    211,
+                                                                    211,
+                                                                    0.5),
+                                                            hintText:
+                                                                "Tên team...",
+                                                            prefixIcon: Icon(
+                                                                Icons
+                                                                    .diversity_3_outlined,
+                                                                color: Colors
+                                                                    .white),
+                                                            border: InputBorder
+                                                                .none,
+                                                            contentPadding:
+                                                                EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            10),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              borderSide:
+                                                                  BorderSide
+                                                                      .none,
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              borderSide: BorderSide(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                            hintStyle:
+                                                                TextStyle(
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 10),
+                                                          maxLines: 1,
+                                                          cursorColor:
+                                                              Colors.white,
+                                                          textAlignVertical:
+                                                              TextAlignVertical
+                                                                  .center,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Center(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Container(
+                                                          height: 35,
+                                                          width: 35,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.blue,
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            border: Border.all(
+                                                              color:
+                                                                  Colors.blue,
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                          child: IconButton(
+                                                            onPressed: () {},
+                                                            icon: Icon(Icons
+                                                                .save_outlined),
+                                                            color: Colors.white,
+                                                            iconSize: 15,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: []);
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  height: 42,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 212, 235, 248),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Icon(
+                                            Icons.add_outlined,
+                                            color: Colors.blue,
+                                            size: 15.0,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 20.0),
+                                          child: Text('Hiệu chỉnh team',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -362,7 +501,7 @@ class _DropDownState extends State<DropDown> {
                                                                         : () =>
                                                                             _submitDialog(),
                                                                 child: Text(
-                                                                    'Submit'),
+                                                                    'Tiếp tục'),
                                                                 style: ElevatedButton
                                                                     .styleFrom(
                                                                   primary:
@@ -582,7 +721,7 @@ class _DropDownState extends State<DropDown> {
                                                                         : () =>
                                                                             _submitDialog(),
                                                                 child: Text(
-                                                                    'Submit'),
+                                                                    'Tiếp tục'),
                                                                 style: ElevatedButton
                                                                     .styleFrom(
                                                                   primary:
@@ -753,25 +892,35 @@ class _DropDownState extends State<DropDown> {
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 20,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 40),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      color: Color.fromARGB(255, 221, 202, 27),
-                                      size: 20.0,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Oteam Work',
-                                      style: TextStyle(fontSize: 10),
-                                    )
-                                  ],
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ManageProject()),
+                                );
+                              },
+                              child: Container(
+                                height: 20,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 40),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star,
+                                        color:
+                                            Color.fromARGB(255, 221, 202, 27),
+                                        size: 20.0,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Oteam Work',
+                                        style: TextStyle(fontSize: 10),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
